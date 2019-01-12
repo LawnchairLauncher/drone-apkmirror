@@ -41,23 +41,20 @@ WP_NONCE=$(curl https://www.apkmirror.com | grep -Eow "\"_wpnonce\", '([a-z0-9]+
 FULLNAME="Lawnchair CI (Buildbot)"
 EMAIL="buildbot@lawnchair.info"
 
-CURL_LOG=$(tempfile)
+# Date and time of upload
+UPLOAD_DATE=$(date '+%Y-%m-%d at %H:%M:%S')
 
 # Upload it to APKMirror
-curl -v \
+OUTPUT=$(curl -v \
     -F fullname="$FULLNAME" \
     -F email="$EMAIL" \
     -F changes="$CHANGELOG" \
     -F _wpnonce="$WP_NONCE" \
     -F file=@"${PLUGIN_FILENAME}-${MAJOR_MINOR}_$DRONE_BUILD_NUMBER.apk" \
-    https://www.apkmirror.com/wp-content/plugins/UploadManager/inc/upload.php > $CURL_LOG 2>&1
-
-# Read from log file
-OUTPUT=" This message is to inform that build #${DRONE_BUILD_NUMBER} has been uploaded to APKMirror on $(date '+%Y-%m-%d at %H:%M:%S'). Here is the upload output:
-$(cat $CURL_LOG)"
-echo $OUTPUT
+    https://www.apkmirror.com/wp-content/plugins/UploadManager/inc/upload.php)
 
 # Send curl output via email
 sendmail.sh $PLUGIN_MAIL_SENDER $NOTIFY_EMAIL \
-    "[Drone CI] Build #${DRONE_BUILD_NUMBER} uploaded to APKMirror" $OUTPUT \
+    "[Drone CI] Build #${DRONE_BUILD_NUMBER} uploaded to APKMirror" \
+    "This message is to inform that build #${DRONE_BUILD_NUMBER} has been uploaded to APKMirror on $UPLOAD_DATE with result: ${OUTPUT}" \
     $MAIL_SERVER $MAIL_USER $MAIL_PASSWORD
