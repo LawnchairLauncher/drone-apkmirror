@@ -36,15 +36,7 @@ cp $PLUGIN_APK_PATH ${PLUGIN_FILENAME}-${MAJOR_MINOR}_$DRONE_BUILD_NUMBER.apk
 cp $PLUGIN_MAPPING_PATH proguard-${MAJOR_MINOR}_$DRONE_BUILD_NUMBER.txt
 
 # Obtain nonce
-REGEX='"_wpnonce", '"'"'([a-z0-9]+)'"'"
-RESULT=$(curl https://www.apkmirror.com)
-if [[ ${RESULT} =~ REGEX ]]
-then
-    WP_NONCE="${BASH_REMATCH[1]}"
-else
-    echo "Failed to obtain nonce"
-    exit
-fi
+WP_NONCE=$(curl https://www.apkmirror.com | grep -Eow "\"_wpnonce\", '([a-z0-9]+)'" | sed "s/\"_wpnonce\", '//" | sed "s/'//")
 
 FULLNAME="Lawnchair CI (Buildbot)"
 EMAIL="buildbot@lawnchair.info"
