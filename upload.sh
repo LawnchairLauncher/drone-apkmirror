@@ -28,7 +28,7 @@ fi
 MAJOR_MINOR=$(echo "${MAJOR_MINOR}" | sed -r 's/-/_/g')
 
 # Adding body to changelog (intentional whitespace!!)
-CHANGELOG=" <b>Changelog for build ${MAJOR_MINOR}-${DRONE_BUILD_NUMBER}:</b>
+CHANGELOG=" Changelog for build ${MAJOR_MINOR}-${DRONE_BUILD_NUMBER}:
 $(cat changelog.txt)"
 
 # Preparing files to upload
