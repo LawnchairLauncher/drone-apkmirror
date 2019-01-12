@@ -53,6 +53,6 @@ OUTPUT=$(curl -v \
 NOTIFY_EMAIL="divad.nnamtdeis@gmail.com"
 
 # Send curl output via email
-./sendmail.sh $PLUGIN_MAIL_SENDER $NOTIFY_EMAIL \
+sendmail.sh $PLUGIN_MAIL_SENDER $NOTIFY_EMAIL \
     "Build #${DRONE_BUILD_NUMBER} has been uploaded to APKMirror" $OUTPUT \
     $MAIL_SERVER $MAIL_USER $MAIL_PASSWORD
