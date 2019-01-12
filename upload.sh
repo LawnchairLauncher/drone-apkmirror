@@ -41,14 +41,20 @@ WP_NONCE=$(curl https://www.apkmirror.com | grep -Eow "\"_wpnonce\", '([a-z0-9]+
 FULLNAME="Lawnchair CI (Buildbot)"
 EMAIL="buildbot@lawnchair.info"
 
+CURL_LOG=$(tempfile)
+
 # Upload it to APKMirror
-OUTPUT=$(curl -v \
+curl -v \
     -F fullname="$FULLNAME" \
     -F email="$EMAIL" \
     -F changes="$CHANGELOG" \
     -F _wpnonce="$WP_NONCE" \
     -F file=@"${PLUGIN_FILENAME}-${MAJOR_MINOR}_$DRONE_BUILD_NUMBER.apk" \
-    https://www.apkmirror.com/wp-content/plugins/UploadManager/inc/upload.php)
+    https://www.apkmirror.com/wp-content/plugins/UploadManager/inc/upload.php > $CURL_LOG 2>&1
+
+# Read from log file
+OUTPUT=$(cat $CURL_LOG)
+echo $OUTPUT
 
 # Send curl output via email
 sendmail.sh $PLUGIN_MAIL_SENDER $NOTIFY_EMAIL \
