@@ -50,8 +50,6 @@ OUTPUT=$(curl -v \
     -F file=@"${PLUGIN_FILENAME}-${MAJOR_MINOR}_$DRONE_BUILD_NUMBER.apk" \
     https://www.apkmirror.com/wp-content/plugins/UploadManager/inc/upload.php)
 
-NOTIFY_EMAIL="divad.nnamtdeis@gmail.com"
-
 # Send curl output via email
 sendmail.sh $PLUGIN_MAIL_SENDER $NOTIFY_EMAIL \
     "Build #${DRONE_BUILD_NUMBER} has been uploaded to APKMirror" $OUTPUT \
