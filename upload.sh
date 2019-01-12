@@ -53,10 +53,11 @@ curl -v \
     https://www.apkmirror.com/wp-content/plugins/UploadManager/inc/upload.php > $CURL_LOG 2>&1
 
 # Read from log file
-OUTPUT=$(cat $CURL_LOG)
+OUTPUT=" This message is to inform that build #${DRONE_BUILD_NUMBER} has been uploaded to APKMirror on $(date '+%Y-%m-%d at %H:%M:%S'). Here is the upload output:
+$(cat $CURL_LOG)"
 echo $OUTPUT
 
 # Send curl output via email
 sendmail.sh $PLUGIN_MAIL_SENDER $NOTIFY_EMAIL \
-    "Build #${DRONE_BUILD_NUMBER} has been uploaded to APKMirror" $OUTPUT \
+    "[Drone CI] Build #${DRONE_BUILD_NUMBER} uploaded to APKMirror" $OUTPUT \
     $MAIL_SERVER $MAIL_USER $MAIL_PASSWORD
