@@ -6,7 +6,7 @@ RUN apk --no-cache add \
         openssl \
         mailx
 
-ADD upload.sh /bin/
-RUN chmod +x /bin/upload.sh
+ADD upload.sh sendmail.sh /bin/
+RUN chmod +x /bin/*.sh
 
 ENTRYPOINT /bin/upload.sh
