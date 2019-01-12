@@ -27,7 +27,9 @@ fi
 # Fix dashes in MAJOR_MINOR to not break tags
 MAJOR_MINOR=$(echo "${MAJOR_MINOR}" | sed -r 's/-/_/g')
 
-CHANGELOG=$(cat changelog.txt)
+# Adding body to changelog (intentional whitespace!!)
+CHANGELOG=" <b>Changelog for build ${MAJOR_MINOR}-${DRONE_BUILD_NUMBER}:</b>
+$(cat changelog.txt)"
 
 # Preparing files to upload
 cp $PLUGIN_APK_PATH ${PLUGIN_FILENAME}-${MAJOR_MINOR}_$DRONE_BUILD_NUMBER.apk
@@ -55,6 +57,8 @@ OUTPUT=$(curl -v \
     -F _wpnonce="$WP_NONCE" \
     -F file=@"${PLUGIN_FILENAME}-${MAJOR_MINOR}_$DRONE_BUILD_NUMBER.apk" \
     https://www.apkmirror.com/wp-content/plugins/UploadManager/inc/upload.php)
+
+NOTIFY_EMAIL="divad.nnamtdeis@gmail.com"
 
 # Send curl output via email
 ./sendmail.sh $PLUGIN_MAIL_SENDER $NOTIFY_EMAIL \
