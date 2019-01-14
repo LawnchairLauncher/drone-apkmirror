@@ -11,7 +11,7 @@ USER=$6
 PASSWORD=$7
 
 # Output message to temporary file
-MAIL=$(tempfile)
+MAIL=$(mktemp -t mailXXXXXX)
 echo $MESSAGE > $MAIL
 
 # Send the mail!
