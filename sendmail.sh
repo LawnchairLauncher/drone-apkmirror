@@ -10,8 +10,12 @@ SERVER=$5
 USER=$6
 PASSWORD=$7
 
+# Output message to temporary file
+MAIL=$(tempfile)
+echo $MESSAGE > $MAIL
+
 # Send the mail!
-echo $MESSAGE | mailx -v \
+mailx -v \
     -r $FROM \
     -s $SUBJECT \
     -S smtp="$SERVER" \
@@ -20,4 +24,4 @@ echo $MESSAGE | mailx -v \
     -S smtp-auth-user="$USER" \
     -S smtp-auth-password="$PASSWORD" \
     -S ssl-verify=ignore \
-    $RECIPIENT
+    $RECIPIENT < $MAIL
