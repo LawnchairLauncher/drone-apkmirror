@@ -21,7 +21,11 @@ if [ -z "$PLUGIN_CHANNEL_ID" ]; then
 fi
 
 if [ -z "$PLUGIN_MAIL_SENDER" ]; then
-    PLUGIN_MAIL_SENDER="buildbot@lawnchair.info"
+    PLUGIN_MAIL_SENDER="Lawnchair CI"
+fi
+
+if [ -z "$PLUGIN_MAIL_FROM" ]; then
+    PLUGIN_MAIL_FROM="buildbot@lawnchair.info"
 fi
 
 # Fix dashes in MAJOR_MINOR to not break tags
