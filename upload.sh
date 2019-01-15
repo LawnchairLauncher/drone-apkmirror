@@ -54,7 +54,7 @@ OUTPUT=$(curl -v \
     https://www.apkmirror.com/wp-content/plugins/UploadManager/inc/upload.php)
 
 # Send curl output via email
-sendmail "$FULLNAME <$PLUGIN_MAIL_SENDER>" $NOTIFY_EMAIL \
+sendmail $PLUGIN_MAIL_SENDER $PLUGIN_MAIL_FROM $NOTIFY_EMAIL \
     "[Drone CI] Build #${DRONE_BUILD_NUMBER} uploaded to APKMirror" \
     "This message is to inform that build #${DRONE_BUILD_NUMBER} has been uploaded to APKMirror on $UPLOAD_DATE with result: ${OUTPUT}" \
     $MAIL_SERVER $MAIL_USER $MAIL_PASSWORD
