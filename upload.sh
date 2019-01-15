@@ -59,6 +59,6 @@ OUTPUT=$(curl -v \
 
 # Send curl output via email
 sendmail.sh $PLUGIN_MAIL_SENDER $PLUGIN_MAIL_FROM $NOTIFY_EMAIL \
-    "[Drone CI] Build #${DRONE_BUILD_NUMBER} uploaded to APKMirror" \
+    "[$DRONE_REPO_OWNER/$DRONE_REPO_NAME] Build #${DRONE_BUILD_NUMBER} uploaded to APKMirror" \
     "This message is to inform that build #${DRONE_BUILD_NUMBER} has been uploaded to APKMirror on $UPLOAD_DATE with result: ${OUTPUT}" \
     $MAIL_SERVER $MAIL_USER $MAIL_PASSWORD
