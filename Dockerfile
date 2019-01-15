@@ -5,7 +5,7 @@ RUN apk --no-cache add \
         curl \
         openssl
 
-ADD upload.sh sendmail /bin/
-RUN chmod +x /bin/*.sh /bin/sendmail
+ADD upload.sh sendmail.sh /bin/
+RUN chmod +x /bin/*.sh
 
 ENTRYPOINT /bin/upload.sh
