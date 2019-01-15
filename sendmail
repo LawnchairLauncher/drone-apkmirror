@@ -1,6 +1,6 @@
 #!/bin/bash
 # Send email via SMTP from bash using curl
-# Example: ./sendmail.sh "System admin" admin@localhost buildbot@localhost "Build status" "Build finished with result code 0" "smtps://localhost:465" admin password
+# Example: sendmail "System admin" admin@localhost buildbot@localhost "Build status" "Build finished with result code 0" "smtps://localhost:465" admin password
 
 SENDER=$1
 FROM=$2
@@ -30,7 +30,7 @@ From: $SENDER <$FROM>
 To: $TO
 Subject: $SUBJECT
 Message-ID: $MESSAGE_ID
-User-Agent: drone-ci/sendmail.sh
+User-Agent: drone-ci/sendmail
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf8"
 
